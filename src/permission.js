@@ -1,12 +1,10 @@
 import router from './router'
 import { store } from '@/store/index'
 import getPageTitle from '@/utils/page'
-import NProgress from 'nprogress'
 
-const whiteList = ['Login']
+const whiteList = ['Login', 'Register']
 
 router.beforeEach(async (to, from, next) => {
-    NProgress.start()
     const token = store.getters['user/token']
     document.title = getPageTitle(to.meta.title)
     if (token) {
@@ -15,9 +13,7 @@ router.beforeEach(async (to, from, next) => {
         } else {
             const router = store.getters['router/asyncRouters']
             if (!router) {
-                const userInfo = await store.dispatch('user/userInfo')
-                const accessRoutes = await store.dispatch('router/asyncRouters', userInfo.roleID)
-                router.push(accessRoutes)
+                next({ name: 'Login', query: { redirect: document.location.hash } })
             }
             next({ ...to, replace: true })
         }
@@ -28,8 +24,4 @@ router.beforeEach(async (to, from, next) => {
             next({ name: 'Login', query: { redirect: document.location.hash } })
         }
     }
-})
-
-router.afterEach(() => {
-    NProgress.done()
 })

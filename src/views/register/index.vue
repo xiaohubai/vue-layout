@@ -8,7 +8,7 @@
 import { captcha } from '@/api/user'
 
 export default {
-  name: 'Error',
+  name: 'Register',
   methods: {
     loginVerify() {
       captcha()

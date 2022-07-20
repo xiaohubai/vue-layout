@@ -1,12 +1,36 @@
 export default [
     {
-        url: "/api/login",
+        url: "/v1/login",
         method: "post",
         response: () => {
             return {
-                code: 0,
-                message: "ok",
-                data: ["tom", "jerry"]
+                "code": 0,
+                "data": {
+                    "userInfo": {
+                        "id": 1,
+                        "uid": "67cdf195-574d-456a-a761-c18b5b8585c1",
+                        "userName": "admin",
+                        "nick": "",
+                        "birth": "2022-07-20",
+                        "avatar": "avatar.jpg",
+                        "roleID": "0",
+                        "roleName": "管理员",
+                        "phone": "13269110806",
+                        "wechat": "",
+                        "email": "",
+                        "state": "",
+                        "createdUser": "admin",
+                        "updatedUser": "admin",
+                        "createAt": "2022-07-20 20:44:58",
+                        "updateAt": "2022-07-20 20:44:58"
+                    },
+                    "tokenInfo": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2NkZjE5NS01NzRkLTQ1NmEtYTc2MS1jMThiNWI4NTg1YzEiLCJ1c2VybmFtZSI6ImFkbWluIiwicGhvbmUiOiIxMzI2OTExMDgwNiIsInJvbGVfaWQiOiIwIiwicm9sZV9uYW1lIjoi566h55CG5ZGYIiwiYnJpdGgiOiIiLCJzdGF0ZSI6IjAiLCJidWZmZXJfdGltZSI6ODY0MDAsImV4cCI6MTY1ODkyNTg5OCwiaXNzIjoieGlhb2h1YmFpQG91dGxvb2suY29tIiwibmJmIjoxNjU4MzIwMDk4fQ.OmegMpA-Ron2mXSm_bLI9Herpyh3uhs6lr1c_r0BBQo",
+                        "expiresAt": 1658925898000
+                    }
+                },
+                "msg": "成功",
+                "trace_id": "3d87318cc90aea33"
             };
         }
     },

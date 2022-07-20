@@ -30,14 +30,14 @@
             </el-input>
           </el-form-item>
           <el-form-item style="position: relative" prop="captcha">
-            <el-input v-model="loginForm.captcha" name="logVerify" placeholder="请输入验证码" style="width: 60%" />
+            <el-input v-model="loginForm.captcha" name="captcha" placeholder="请输入验证码" style="width: 60%" />
             <div class="vPic">
               <img v-if="picPath" :src="picPath" alt="请输入验证码" @click="loginCaptcha()">
             </div>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" style="width: 46%" @click="submitForm">登 录</el-button>
-            <el-button type="primary" style="width: 46%; margin-left: 8%" @click="checkInit">暂空</el-button>
+            <el-button type="primary" style="width: 46%; margin-left: 8%" @click="register">注册</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -47,7 +47,9 @@
 </template>
 <script>
 import { captcha } from '@/api/user'
+import { store } from '@/store/index'
 export default {
+  name: 'Login',
   data() {
     const checkUsername = (rule, value, callback) => {
       if (value.length < 5) {
@@ -74,18 +76,9 @@ export default {
       rules: {
         username: [{ validator: checkUsername, trigger: 'blur' }],
         password: [{ validator: checkPassword, trigger: 'blur' }],
-        captcha: [
-          {
-            required: true,
-            message: '请输入验证码',
-            trigger: 'blur'
-          },
-          {
-            message: '验证码格式不正确',
-            trigger: 'blur',
-          }]
+        captcha: [{ required: true, trigger: 'change', message: '验证码不能为空' }]
       },
-      logVerify: '',
+      captcha: '',
       picPath: ''
     }
   },
@@ -93,19 +86,13 @@ export default {
     this.loginCaptcha()
   },
   methods: {
-    async checkInit() {
-      this.$message({
-        type: 'info',
-        message: '已配置数据库信息，无法初始化'
-      })
-    },
-    async login() {
-      return await this.LoginIn(this.loginForm)
+    async register() {
+      this.$router.push({ name: 'Register' })
     },
     async submitForm() {
       this.$refs.loginForm.validate(async (v) => {
         if (v) {
-          const flag = await this.login()
+          const flag = await this.$store.dispatch('user/login', this.loginForm)
           if (!flag) {
             this.loginCaptcha()
           }
@@ -125,8 +112,8 @@ export default {
     },
     loginCaptcha() {
       captcha({}).then((resp) => {
-        this.rules.captcha[1].max = resp.data.pic_length_max
-        this.rules.captcha[1].min = resp.pic_length_min
+        this.rules.captcha.max = resp.data.pic_length_max
+        this.rules.captcha.min = resp.pic_length_min
         this.picPath = resp.data.pic_path
         this.loginForm.captchaId = resp.data.captcha_id
       })
