@@ -53,7 +53,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { emitter } from '@/utils/bus.js'
-import Screenfull from '@/view/layout/screenfull/index.vue'
+import Screenfull from '@/views/layout/screenfull/index.vue'
 
 export default {
   name: 'SearchComponent',

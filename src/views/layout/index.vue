@@ -97,10 +97,10 @@
 </template>
 
 <script>
-import Aside from '@/view/layout/aside/index.vue'
-import HistoryComponent from '@/view/layout/aside/historyComponent/history.vue'
-import Search from '@/view/layout/search/search.vue'
-import BottomInfo from '@/view/layout/bottomInfo/bottomInfo.vue'
+import Aside from '@/views/layout/aside/index.vue'
+import HistoryComponent from '@/views/layout/aside/historyComponent/history.vue'
+import Search from '@/views/layout/search/search.vue'
+import BottomInfo from '@/views/layout/bottomInfo/bottomInfo.vue'
 import { mapGetters, mapActions } from 'vuex'
 import CustomPic from '@/components/customPic/index.vue'
 import Setting from './setting/index.vue'

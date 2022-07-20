@@ -1,5 +1,6 @@
 import service from '@/utils/request'
 import axios from 'axios'
+import { flatMap } from 'lodash'
 // @Summary 用户登录
 // @Produce  application/json
 // @Param data body {username:"string",password:"string"}
@@ -17,9 +18,10 @@ export const login = (data) => {
 // @Param data body {username:"string",password:"string"}
 // @Router /base/captcha [post]
 
-export const captcha = (data) => {
-  axios.get('/api/login').then(res => {
-    console.log(res.data);
+export const captcha = () => {
+  return service({
+    url: '/v1/captcha',
+    method: 'get'
   })
 }
 
@@ -36,65 +38,6 @@ export const register = (data) => {
   })
 }
 
-// @Summary 修改密码
-// @Produce  application/json
-// @Param data body {username:"string",password:"string",newPassword:"string"}
-// @Router /user/changePassword [post]
-export const changePassword = (data) => {
-  return service({
-    url: '/user/changePassword',
-    method: 'post',
-    data: data
-  })
-}
-
-// @Tags User
-// @Summary 分页获取用户列表
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body modelInterface.PageInfo true "分页获取用户列表"
-// @Success 200 {string} json "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /user/getUserList [post]
-export const getUserList = (data) => {
-  return service({
-    url: '/user/getUserList',
-    method: 'post',
-    data: data
-  })
-}
-
-// @Tags User
-// @Summary 设置用户权限
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body api.SetUserAuth true "设置用户权限"
-// @Success 200 {string} json "{"success":true,"data":{},"msg":"修改成功"}"
-// @Router /user/setUserAuthority [post]
-export const setUserAuthority = (data) => {
-  return service({
-    url: '/user/setUserAuthority',
-    method: 'post',
-    data: data
-  })
-}
-
-// @Tags SysUser
-// @Summary 删除用户
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.SetUserAuth true "删除用户"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
-// @Router /user/deleteUser [delete]
-export const deleteUser = (data) => {
-  return service({
-    url: '/user/deleteUser',
-    method: 'delete',
-    data: data
-  })
-}
 
 // @Tags SysUser
 // @Summary 设置用户信息
@@ -112,21 +55,7 @@ export const setUserInfo = (data) => {
   })
 }
 
-// @Tags User
-// @Summary 设置用户权限
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body api.setUserAuthorities true "设置用户权限"
-// @Success 200 {string} json "{"success":true,"data":{},"msg":"修改成功"}"
-// @Router /user/setUserAuthorities [post]
-export const setUserAuthorities = (data) => {
-  return service({
-    url: '/user/setUserAuthorities',
-    method: 'post',
-    data: data
-  })
-}
+
 
 // @Tags User
 // @Summary 获取用户信息
@@ -143,17 +72,3 @@ export const getUserInfo = () => {
 }
 
 
-// @Tags User
-// @Summary 重置密码
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Success 200 {string} json "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /user/resetPassword [put]
-export const resetPassword = (data) => {
-  return service({
-    url: '/user/resetPassword',
-    method: 'put',
-    data: data
-  })
-}

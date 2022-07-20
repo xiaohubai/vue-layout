@@ -55,7 +55,7 @@ export const router = {
       const baseRouter = [{
         path: '/layout',
         name: 'layout',
-        component: 'view/layout/index.vue',
+        component: 'views/layout/index.vue',
         meta: {
           title: '底层layout'
         },
@@ -70,7 +70,7 @@ export const router = {
         meta: {
           title: '迷路了*。*',
         },
-        component: 'view/error/index.vue'
+        component: 'views/error/index.vue'
       })
       formatRouter(asyncRouter)
       baseRouter[0].children = asyncRouter

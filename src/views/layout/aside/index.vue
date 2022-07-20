@@ -24,7 +24,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import AsideComponent from '@/view/layout/aside/asideComponent/index.vue'
+import AsideComponent from '@/views/layout/aside/asideComponent/index.vue'
 import { emitter } from '@/utils/bus.js'
 
 export default {

@@ -7,12 +7,12 @@ const routes = [{
 {
   path: '/login',
   name: 'Login',
-  component: () => import('@/view/login/index.vue')
+  component: () => import('@/views/login/index.vue')
 },
 {
   path: '/error',
   name: 'Error',
-  component: () => import('@/view/error/index.vue')
+  component: () => import('@/views/error/index.vue')
 }
 ]
 

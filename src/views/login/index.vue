@@ -32,48 +32,22 @@
           <el-form-item style="position: relative" prop="captcha">
             <el-input v-model="loginForm.captcha" name="logVerify" placeholder="请输入验证码" style="width: 60%" />
             <div class="vPic">
-              <img v-if="picPath" :src="picPath" alt="请输入验证码" @click="loginVerify()">
+              <img v-if="picPath" :src="picPath" alt="请输入验证码" @click="loginCaptcha()">
             </div>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" style="width: 46%" @click="checkInit">前往初始化</el-button>
-            <el-button type="primary" style="width: 46%; margin-left: 8%" @click="submitForm">登 录</el-button>
+            <el-button type="primary" style="width: 46%" @click="submitForm">登 录</el-button>
+            <el-button type="primary" style="width: 46%; margin-left: 8%" @click="checkInit">暂空</el-button>
           </el-form-item>
         </el-form>
       </div>
       <div class="login_panle_right" />
-      <div class="login_panle_foot">
-        <div class="links">
-          <a href="http://doc.henrongyi.top/" target="_blank">
-            <img src="@/assets/docs.png" class="link-icon">
-          </a>
-          <a href="https://support.qq.com/product/371961" target="_blank">
-            <img src="@/assets/kefu.png" class="link-icon">
-          </a>
-          <a href="https://github.com/flipped-aurora/gin-vue-admin" target="_blank">
-            <img src="@/assets/github.png" class="link-icon">
-          </a>
-          <a href="https://space.bilibili.com/322210472" target="_blank">
-            <img src="@/assets/video.png" class="link-icon">
-          </a>
-        </div>
-        <div class="copyright">
-          <bootomInfo />
-        </div>
-      </div>
     </div>
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
 import { captcha } from '@/api/user'
-import { checkDB } from '@/api/initdb'
-import bootomInfo from '@/view/layout/bottomInfo/bottomInfo.vue'
 export default {
-  name: 'Login',
-  components: {
-    bootomInfo
-  },
   data() {
     const checkUsername = (rule, value, callback) => {
       if (value.length < 5) {
@@ -100,34 +74,30 @@ export default {
       rules: {
         username: [{ validator: checkUsername, trigger: 'blur' }],
         password: [{ validator: checkPassword, trigger: 'blur' }],
-        captcha: [{ required: true, message: '请输入验证码', trigger: 'blur' },
-        {
-          message: '验证码格式不正确',
-          trigger: 'blur',
-        }]
+        captcha: [
+          {
+            required: true,
+            message: '请输入验证码',
+            trigger: 'blur'
+          },
+          {
+            message: '验证码格式不正确',
+            trigger: 'blur',
+          }]
       },
       logVerify: '',
       picPath: ''
     }
   },
   created() {
-    this.loginVerify()
+    this.loginCaptcha()
   },
   methods: {
-    ...mapActions('user', ['LoginIn']),
     async checkInit() {
-      const res = await checkDB()
-      if (res.code === 0) {
-        if (res.data?.needInit) {
-          this.$store.commit('user/NeedInit')
-          this.$router.push({ name: 'Init' })
-        } else {
-          this.$message({
-            type: 'info',
-            message: '已配置数据库信息，无法初始化'
-          })
-        }
-      }
+      this.$message({
+        type: 'info',
+        message: '已配置数据库信息，无法初始化'
+      })
     },
     async login() {
       return await this.LoginIn(this.loginForm)
@@ -137,7 +107,7 @@ export default {
         if (v) {
           const flag = await this.login()
           if (!flag) {
-            this.loginVerify()
+            this.loginCaptcha()
           }
         } else {
           this.$message({
@@ -145,7 +115,7 @@ export default {
             message: '请正确填写登录信息',
             showClose: true
           })
-          this.loginVerify()
+          this.loginCaptcha()
           return false
         }
       })
@@ -153,12 +123,12 @@ export default {
     changeLock() {
       this.lock = this.lock === 'lock' ? 'unlock' : 'lock'
     },
-    loginVerify() {
-      captcha({}).then((ele) => {
-        this.rules.captcha[1].max = 6
-        this.rules.captcha[1].min = 6
-        this.picPath = ele.data.pic_path
-        this.loginForm.captchaId = ele.data.captcha_id
+    loginCaptcha() {
+      captcha({}).then((resp) => {
+        this.rules.captcha[1].max = resp.data.pic_length_max
+        this.rules.captcha[1].min = resp.pic_length_min
+        this.picPath = resp.data.pic_path
+        this.loginForm.captchaId = resp.data.captcha_id
       })
     }
   }
