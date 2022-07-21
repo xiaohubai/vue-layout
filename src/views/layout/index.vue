@@ -1,18 +1,18 @@
 <template>
   <el-container class="layout-cont">
-    <el-container :class="[isSider?'openside':'hideside',isMobile ? 'mobile': '']">
-      <el-row :class="[isShadowBg?'shadowBg':'']" @click="changeShadow()" />
+    <el-container :class="[isSider ? 'openside' : 'hideside', isMobile ? 'mobile' : '']">
+      <el-row :class="[isShadowBg ? 'shadowBg' : '']" @click="changeShadow()" />
       <el-aside class="main-cont main-left">
-        <div class="tilte" :style="{background: backgroundColor}">
+        <div class="tilte" :style="{ background: backgroundColor }">
           <img alt class="logoimg" :src="$configs.appLogo">
-          <h2 v-if="isSider" class="tit-text" :style="{color:textColor}">{{ $configs.appName }}</h2>
+          <h2 v-if="isSider" class="tit-text" :style="{ color: textColor }">{{ $configs.appName }}</h2>
         </div>
         <Aside class="aside" />
       </el-aside>
       <!-- 分块滑动功能 -->
       <el-main class="main-cont main-right">
         <transition :duration="{ enter: 800, leave: 100 }" mode="out-in" name="el-fade-in-linear">
-          <div :style="{width: `calc(100% - ${isMobile?'0px':isCollapse?'54px':'220px'})`}" class="topfix">
+          <div :style="{ width: `calc(100% - ${isMobile ? '0px' : isCollapse ? '54px' : '220px'})` }" class="topfix">
             <el-row>
               <!-- :xs="8" :sm="6" :md="4" :lg="3" :xl="1" -->
               <el-col>
@@ -30,8 +30,9 @@
                     </el-col>
                     <el-col :xs="10" :lg="14" :md="14" :sm="9" :xl="14" :pull="1">
                       <el-breadcrumb class="breadcrumb">
-                        <el-breadcrumb-item v-for="item in matched.slice(1,matched.length)" :key="item.path">{{
-                        item.meta.title }}</el-breadcrumb-item>
+                        <el-breadcrumb-item v-for="item in matched.slice(1, matched.length)" :key="item.path">{{
+                            item.meta.title
+                        }}</el-breadcrumb-item>
                       </el-breadcrumb>
                     </el-col>
                     <el-col :xs="12" :lg="9" :md="9" :sm="14" :xl="9">
@@ -56,7 +57,7 @@
                               </el-dropdown-item>
                               <template v-if="userInfo.authorities">
                                 <el-dropdown-item
-                                  v-for="item in userInfo.authorities.filter(i=>i.authorityId!==userInfo.authorityId)"
+                                  v-for="item in userInfo.authorities.filter(i => i.authorityId !== userInfo.authorityId)"
                                   :key="item.authorityId" @click="changeUserAuth(item.authorityId)">
                                   <span>
                                     切换为：{{ item.authorityName }}

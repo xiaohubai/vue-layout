@@ -1,4 +1,4 @@
-import { login } from '@/api/user'
+import { login, getUserInfo } from '@/api/user'
 import router from '@/router/index'
 import { store } from '@/store/index'
 
@@ -6,19 +6,13 @@ export const user = {
   namespaced: true,
   state: {
     userInfo: {
-      uid: '',
-      userName: '',
-      nick: '',
-      birth: '',
-      avatar: '',
-      roleId: '',
-      roleName: '',
-      phone: '',
-      wechat: '',
-      email: '',
-      state: '',
-      createAt: '',
-      defaultRouter: '',
+      uuid: '',
+      nickName: '',
+      headerImg: '',
+      authority: {},
+      sideMode: 'dark',
+      activeColor: '#4D70FF',
+      baseColor: '#fff'
     },
     tokenInfo:
     {
@@ -37,12 +31,19 @@ export const user = {
     }
   },
   actions: {
-    async login({ commit }, loginInfo) {
+    async GetUserInfo({ commit }) {
+      const res = await getUserInfo()
+      if (res.code === 0) {
+        commit('setUserInfo', res.data.userInfo)
+      }
+      return res
+    },
+    async Login({ commit }, loginInfo) {
       const resp = await login(loginInfo)
       if (resp.code === 0) {
         commit('setUserInfo', resp.data.userInfo)
         commit('setToken', resp.data.tokenInfo)
-        await store.dispatch('router/GetAsyncRouters', resp.data.userInfo.roleID)
+        await store.dispatch('router/GetAsyncRouters', "0")
         const asyncRouters = store.getters['router/asyncRouters']
         asyncRouters.forEach(asyncRouter => {
           router.addRoute(asyncRouter)
@@ -57,6 +58,33 @@ export const user = {
     },
     token(state) {
       return state.tokenInfo.token
+    },
+    mode(state) {
+      return state.userInfo.sideMode
+    },
+    sideMode(state) {
+      if (state.userInfo.sideMode === 'dark') {
+        return '#191a23'
+      } else if (state.userInfo.sideMode === 'light') {
+        return '#fff'
+      } else {
+        return state.userInfo.sideMode
+      }
+    },
+    baseColor(state) {
+      if (state.userInfo.sideMode === 'dark') {
+        return '#fff'
+      } else if (state.userInfo.sideMode === 'light') {
+        return '#191a23'
+      } else {
+        return state.userInfo.baseColor
+      }
+    },
+    activeColor(state) {
+      if (state.userInfo.sideMode === 'dark' || state.userInfo.sideMode === 'light') {
+        return '#4D70FF'
+      }
+      return state.userInfo.activeColor
     }
   }
 }

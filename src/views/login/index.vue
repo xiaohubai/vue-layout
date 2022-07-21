@@ -91,9 +91,9 @@ export default {
     async submitForm() {
       this.$refs.loginForm.validate(async (v) => {
         if (v) {
-          const flag = await this.$store.dispatch('user/login', this.loginForm)
+          const flag = await this.$store.dispatch('user/Login', this.loginForm)
           if (flag) {
-            this.$router.push({ name: this.$store.getters['user/userInfo'].defaultRouter })
+            this.$router.push({ name: this.$store.getters['user/userInfo'].authority.defaultRouter })
             return true
           }
         }

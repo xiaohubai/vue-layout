@@ -16,15 +16,6 @@ export const findFile = (params) => {
   })
 }
 
-export const breakpointContinue = (data) => {
-  return service({
-      url: '/fileUploadAndDownload/breakpointContinue',
-      method: 'post',
-      headers: { 'Content-Type': 'multipart/form-data' },
-      data
-  })
-}
-
 export const breakpointContinueFinish = (params) => {
   return service({
     url: '/fileUploadAndDownload/breakpointContinueFinish',
