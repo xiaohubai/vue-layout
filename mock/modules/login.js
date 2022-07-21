@@ -19,6 +19,7 @@ export default [
                         "wechat": "",
                         "email": "",
                         "state": "",
+                        "defaultRouter": "dashboard",
                         "createdUser": "admin",
                         "updatedUser": "admin",
                         "createAt": "2022-07-20 20:44:58",

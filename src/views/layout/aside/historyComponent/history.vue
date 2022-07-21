@@ -1,29 +1,19 @@
 ﻿<template>
   <div class="router-history">
-    <el-tabs
-      v-model="activeValue"
-      :closable="!(historys.length===1&&$route.name===defaultRouter)"
-      type="card"
-      @contextmenu.prevent="openContextMenu($event)"
-      @tab-click="changeTab"
-      @tab-remove="removeTab"
-    >
-      <el-tab-pane
-        v-for="item in historys"
-        :key="name(item)"
-        :label="item.meta.title"
-        :name="name(item)"
-        :tab="item"
-        class="gva-tab"
-      >
+    <el-tabs v-model="activeValue" :closable="!(historys.length === 1 && $route.name === defaultRouter)" type="card"
+      @contextmenu.prevent="openContextMenu($event)" @tab-click="changeTab" @tab-remove="removeTab">
+      <el-tab-pane v-for="item in historys" :key="name(item)" :label="item.meta.title" :name="name(item)" :tab="item"
+        class="gva-tab">
         <template #label>
-          <span :style="{color: activeValue===name(item)?activeColor:'#333'}"><i class="dot" :style="{ backgroundColor:activeValue===name(item)?activeColor:'#ddd'}" /> {{ item.meta.title }}</span>
+          <span :style="{ color: activeValue === name(item) ? activeColor : '#333' }"><i class="dot"
+              :style="{ backgroundColor: activeValue === name(item) ? activeColor : '#ddd' }" /> {{ item.meta.title
+              }}</span>
         </template>
       </el-tab-pane>
     </el-tabs>
 
     <!--自定义右键菜单html代码-->
-    <ul v-show="contextMenuVisible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
+    <ul v-show="contextMenuVisible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
       <li @click="closeAll">关闭所有</li>
       <li @click="closeLeft">关闭左侧</li>
       <li @click="closeRight">关闭右侧</li>
@@ -38,8 +28,8 @@ import { emitter } from '@/utils/bus.js'
 
 const getFmtString = (item) => {
   return item.name +
-      JSON.stringify(item.query) +
-      JSON.stringify(item.params)
+    JSON.stringify(item.query) +
+    JSON.stringify(item.params)
 }
 export default {
   name: 'HistoryComponent',
@@ -302,9 +292,11 @@ export default {
   color: #333;
   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.2);
 }
-.el-tabs__item .el-icon-close{
+
+.el-tabs__item .el-icon-close {
   color: initial !important;
 }
+
 .el-tabs__item .dot {
   content: "";
   width: 9px;
@@ -319,6 +311,7 @@ export default {
   margin: 0;
   padding: 7px 16px;
 }
+
 .contextmenu li:hover {
   background: #f2f2f2;
   cursor: pointer;

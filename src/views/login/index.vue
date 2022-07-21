@@ -47,7 +47,6 @@
 </template>
 <script>
 import { captcha } from '@/api/user'
-import { store } from '@/store/index'
 export default {
   name: 'Login',
   data() {
@@ -93,18 +92,18 @@ export default {
       this.$refs.loginForm.validate(async (v) => {
         if (v) {
           const flag = await this.$store.dispatch('user/login', this.loginForm)
-          if (!flag) {
-            this.loginCaptcha()
+          if (flag) {
+            this.$router.push({ name: this.$store.getters['user/userInfo'].defaultRouter })
+            return true
           }
-        } else {
-          this.$message({
-            type: 'error',
-            message: '请正确填写登录信息',
-            showClose: true
-          })
-          this.loginCaptcha()
-          return false
         }
+        this.$message({
+          type: 'error',
+          message: '请正确填写登录信息',
+          showClose: true
+        })
+        this.loginCaptcha()
+        return false
       })
     },
     changeLock() {

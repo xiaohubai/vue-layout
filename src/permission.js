@@ -4,6 +4,14 @@ import getPageTitle from '@/utils/page'
 
 const whiteList = ['Login', 'Register']
 
+const getRouter = async () => {
+    await store.dispatch('router/GetAsyncRouters', resp.data.userInfo.roleID)
+    const asyncRouters = store.getters['router/asyncRouters']
+    asyncRouters.forEach(asyncRouter => {
+        router.addRoute(asyncRouter)
+    })
+}
+
 router.beforeEach(async (to, from, next) => {
     const token = store.getters['user/token']
     document.title = getPageTitle(to.meta.title)
@@ -13,7 +21,7 @@ router.beforeEach(async (to, from, next) => {
         } else {
             const router = store.getters['router/asyncRouters']
             if (!router) {
-                next({ name: 'Login', query: { redirect: document.location.hash } })
+                await getRouter()
             }
             next({ ...to, replace: true })
         }

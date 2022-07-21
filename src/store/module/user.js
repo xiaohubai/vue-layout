@@ -18,6 +18,7 @@ export const user = {
       email: '',
       state: '',
       createAt: '',
+      defaultRouter: '',
     },
     tokenInfo:
     {
@@ -44,10 +45,8 @@ export const user = {
         await store.dispatch('router/GetAsyncRouters', resp.data.userInfo.roleID)
         const asyncRouters = store.getters['router/asyncRouters']
         asyncRouters.forEach(asyncRouter => {
-          console.log(asyncRouter)
           router.addRoute(asyncRouter)
         })
-        router.push({ name: 'Layout' })
         return true
       }
     }

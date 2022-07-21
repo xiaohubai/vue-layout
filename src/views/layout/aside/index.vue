@@ -1,18 +1,10 @@
 <template>
-  <div :style="{background:sideMode}">
+  <div :style="{ background: sideMode }">
     <el-scrollbar style="height:calc(100vh - 60px)">
       <transition :duration="{ enter: 800, leave: 100 }" mode="out-in" name="el-fade-in-linear">
-        <el-menu
-          :collapse="isCollapse"
-          :collapse-transition="false"
-          :default-active="active"
-          :background-color="sideMode"
-          :active-text-color="activeColor"
-          :text-color="baseColor"
-          class="el-menu-vertical"
-          unique-opened
-          @select="selectMenuItem"
-        >
+        <el-menu :collapse="isCollapse" :collapse-transition="false" :default-active="active"
+          :background-color="sideMode" :active-text-color="activeColor" :text-color="baseColor" class="el-menu-vertical"
+          unique-opened @select="selectMenuItem">
           <template v-for="item in asyncRouters[0].children">
             <aside-component v-if="!item.hidden" :key="item.name" :router-info="item" />
           </template>
@@ -67,13 +59,13 @@ export default {
       const query = {}
       const params = {}
       ele?.route?.parameters &&
-      ele.route.parameters.forEach(item => {
-        if (item.type === 'query') {
-          query[item.key] = item.value
-        } else {
-          params[item.key] = item.value
-        }
-      })
+        ele.route.parameters.forEach(item => {
+          if (item.type === 'query') {
+            query[item.key] = item.value
+          } else {
+            params[item.key] = item.value
+          }
+        })
       if (index === this.$route.name) return
       if (index.indexOf('http://') > -1 || index.indexOf('https://') > -1) {
         window.open(index)
@@ -86,17 +78,20 @@ export default {
 </script>
 
 <style lang="scss">
-.el-sub-menu__title,.el-menu-item{
-  i{
+.el-sub-menu__title,
+.el-menu-item {
+  i {
     color: inherit !important;
   }
 }
 
-.el-sub-menu__title:hover,.el-menu-item:hover{
-  i{
+.el-sub-menu__title:hover,
+.el-menu-item:hover {
+  i {
     color: inherit !important;
   }
-  span{
+
+  span {
     color: inherit !important;
   }
 }
@@ -106,6 +101,7 @@ export default {
     height: 100%;
   }
 }
+
 .menu-info {
   .menu-contorl {
     line-height: 52px;

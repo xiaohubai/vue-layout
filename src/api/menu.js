@@ -5,7 +5,6 @@ import service from '@/utils/request'
 // @Param 可以什么都不填 调一下即可
 // @Router /menu/getMenu [post]
 export const asyncMenu = (data) => {
-  console.log(data);
   return service({
     url: '/v1/getMenu',
     method: 'post',
