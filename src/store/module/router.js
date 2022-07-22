@@ -1,24 +1,14 @@
-import { asyncMenu } from '@/api/menu'
 import { asyncRouterHandle } from '@/utils/asyncRouter'
-const routerList = []
 
-const formatRouter = (routes) => {
-  routes && routes.forEach(item => {
-    if ((!item.children || item.children.every(ch => ch.hidden)) && item.name !== '404' && !item.hidden) {
-      routerList.push({ label: item.meta.title, value: item.name })
-    }
-    item.meta.hidden = item.hidden
-    if (item.children && item.children.length > 0) {
-      formatRouter(item.children)
-    }
-  })
-}
+import { asyncMenu } from '@/api/menu'
+
 
 export const router = {
   namespaced: true,
   state: {
     asyncRouters: [],
-    routerList: routerList
+    routerList: [],
+    keepAliveRouters: []
   },
   mutations: {
     setRouterList(state, routerList) {
@@ -31,49 +21,24 @@ export const router = {
   },
   actions: {
     // 从后台获取动态路由
-    async GetAsyncRouters({ commit }, roleID) {
-      const baseRouter = [{
-        path: '/layout',
-        name: 'layout',
-        component: 'views/layout/index.vue',
-        meta: {
-          title: '底层layout'
-        },
-        children: []
-      }]
-
-
-      const asyncRouterResp = await asyncMenu(roleID)
-      const asyncRouter = asyncRouterResp.data.menus
-      asyncRouter.push({
-        path: '404',
-        name: '404',
-        hidden: true,
-        meta: {
-          title: '迷路了*。*',
-        },
-        component: 'views/error/index.vue'
-      })
-
-      formatRouter(asyncRouter)
-      baseRouter[0].children = asyncRouter
-      baseRouter.push({
-        path: '/:catchAll(.*)',
-        redirect: '/layout/404'
-
-      })
-      asyncRouterHandle(baseRouter)
-      commit('setAsyncRouter', baseRouter)
-      commit('setRouterList', routerList)
+    async SetAsyncRouter({ commit }) {
+      const asyncRouterRes = await asyncMenu()
+      const asyncRouter = asyncRouterRes.data.menus
+      asyncRouterHandle(asyncRouter)
+      commit('setAsyncRouter', asyncRouter)
       return true
     }
   },
   getters: {
+    // 获取动态路由
     asyncRouters(state) {
       return state.asyncRouters
     },
     routerList(state) {
       return state.routerList
     },
+    keepAliveRouters(state) {
+      return state.keepAliveRouters
+    }
   }
 }

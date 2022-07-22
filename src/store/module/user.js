@@ -1,6 +1,5 @@
 import { login, getUserInfo, setUserInfo } from '@/api/user'
 import router from '@/router/index'
-import { store } from '@/store/index'
 import { ElMessage } from 'element-plus'
 
 export const user = {
@@ -12,32 +11,47 @@ export const user = {
       userName: '',
       nickName: '',
       birth: '',
-      avatar: '',
+      headerImg: '',
       roleID: '',
       roleName: '',
       phone: '',
       wechat: '',
       email: '',
-      state: '',
+      status: '',
       defaultRouter: '',
       sideMode: 'dark',
       activeColor: '#4D70FF',
       baseColor: '#fff'
     },
-    tokenInfo:
-    {
-      token: '',
-      expiresAt: '',
-    }
+    token: '',
   },
   mutations: {
     setUserInfo(state, userInfo) {
       // 这里的 `state` 对象是模块的局部状态
       state.userInfo = userInfo
     },
-    setToken(state, tokenInfo) {
+    setToken(state, token) {
       // 这里的 `state` 对象是模块的局部状态
-      state.tokenInfo = tokenInfo
+      state.token = token
+    },
+    NeedInit(state) {
+      state.userInfo = {}
+      state.token = ''
+      sessionStorage.clear()
+      router.push({ name: 'Init', replace: true })
+    },
+    LoginOut(state) {
+      state.userInfo = {}
+      state.token = ''
+      sessionStorage.clear()
+      router.push({ name: 'Login', replace: true })
+      window.location.reload()
+    },
+    ResetUserInfo(state, userInfo = {}) {
+      state.userInfo = {
+        ...state.userInfo,
+        ...userInfo
+      }
     },
     ChangeSideMode: (state, val) => {
       state.userInfo.sideMode = val
@@ -51,17 +65,30 @@ export const user = {
       }
       return res
     },
-    async Login({ commit }, loginInfo) {
-      const resp = await login(loginInfo)
-      if (resp.code === 0) {
-        commit('setUserInfo', resp.data.userInfo)
-        commit('setToken', resp.data.tokenInfo)
-        await store.dispatch('router/GetAsyncRouters', "0")
-        const asyncRouters = store.getters['router/asyncRouters']
+    async LoginIn({ commit, dispatch, rootGetters, getters }, loginInfo) {
+      const res = await login(loginInfo)
+      if (res.code === 0) {
+        commit('setUserInfo', res.data.user)
+        commit('setToken', res.data.token)
+        await dispatch('router/SetAsyncRouter', {}, { root: true })
+        const asyncRouters = rootGetters['router/asyncRouters']
         asyncRouters.forEach(asyncRouter => {
           router.addRoute(asyncRouter)
         })
+        // const redirect = router.history.current.query.redirect
+        // console.log(redirect)
+        // if (redirect) {
+        //     router.push({ path: redirect })
+        // } else {
+        router.push({ name: getters['userInfo'].defaultRouter })
+        // }
         return true
+      }
+    },
+    async LoginOut({ commit }) {
+      const res = await jsonInBlacklist()
+      if (res.code === 0) {
+        commit('LoginOut')
       }
     },
     async changeSideMode({ commit, state }, data) {
@@ -74,14 +101,13 @@ export const user = {
         })
       }
     },
-
   },
   getters: {
     userInfo(state) {
       return state.userInfo
     },
     token(state) {
-      return state.tokenInfo.token
+      return state.token
     },
     mode(state) {
       return state.userInfo.sideMode

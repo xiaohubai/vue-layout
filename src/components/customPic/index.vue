@@ -1,21 +1,13 @@
 <template>
   <span class="headerAvatar">
     <template v-if="picType === 'avatar'">
-      <el-avatar v-if="userInfo.headerImg" :size="30" :src="avatar" />
-      <el-avatar v-else :size="30" :src="noAvatar" />
-    </template>
-    <template v-if="picType === 'img'">
-      <img v-if="userInfo.headerImg" :src="avatar" class="avatar">
-      <img v-else :src="noAvatar" class="avatar">
-    </template>
-    <template v-if="picType === 'file'">
-      <img :src="file" class="file">
+      <el-avatar v-if="userInfo.headerImg" :size="24" :src="avatar" />
+      <el-avatar v-else :size="24" :src="require('@/assets/noBody.png')" />
     </template>
   </span>
 </template>
 
 <script>
-import noAvatar from '@/assets/noBody.png'
 import { mapGetters } from 'vuex'
 const path = import.meta.env.VITE_BASE_API
 export default {
@@ -34,7 +26,6 @@ export default {
   },
   data() {
     return {
-      noAvatar: noAvatar,
       path: path + '/'
     }
   },
@@ -43,6 +34,7 @@ export default {
     avatar() {
       if (this.picSrc === '') {
         if (this.userInfo.headerImg !== '' && this.userInfo.headerImg.slice(0, 4) === 'http') {
+          console.log(this.userInfo.headerImg.slice(0, 4))
           return this.userInfo.headerImg
         }
         return this.path + this.userInfo.headerImg
@@ -52,27 +44,16 @@ export default {
         }
         return this.path + this.picSrc
       }
-    },
-    file() {
-      if (this.picSrc && this.picSrc.slice(0, 4) !== 'http') {
-        return this.path + this.picSrc
-      }
-      return this.picSrc
     }
   }
 }
 </script>
 
 <style scoped>
-.headerAvatar{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 8px;
-}
-.file{
-    width: 80px;
-    height: 80px;
-    position: relative;
+.headerAvatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 8px;
 }
 </style>
