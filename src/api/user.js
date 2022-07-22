@@ -106,7 +106,7 @@ export const deleteUser = (data) => {
 export const setUserInfo = (data) => {
   return service({
     url: '/user/setUserInfo',
-    method: 'put',
+    method: 'post',
     data: data
   })
 }

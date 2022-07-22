@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-button type="primary" class="drawer-container" icon="setting" @click="showSettingDrawer" />
-    <el-drawer v-model="drawer" title="系统配置" :direction="direction" :before-close="handleClose">
+    <el-drawer v-model="drawer" title="主题配置" :direction="direction" :before-close="handleClose">
       <div class="setting_body">
         <div class="setting_card">
           <div class="setting_content">

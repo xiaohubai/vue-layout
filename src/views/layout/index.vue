@@ -52,18 +52,9 @@
                             <el-dropdown-menu class="dropdown-group">
                               <el-dropdown-item>
                                 <span style="font-weight: 600;">
-                                  当前角色：{{ userInfo.authority.authorityName }}
+                                  当前角色：{{ userInfo.roleName }}
                                 </span>
                               </el-dropdown-item>
-                              <template v-if="userInfo.authorities">
-                                <el-dropdown-item
-                                  v-for="item in userInfo.authorities.filter(i => i.authorityId !== userInfo.authorityId)"
-                                  :key="item.authorityId" @click="changeUserAuth(item.authorityId)">
-                                  <span>
-                                    切换为：{{ item.authorityName }}
-                                  </span>
-                                </el-dropdown-item>
-                              </template>
                               <el-dropdown-item icon="avatar" @click="toPerson">个人信息</el-dropdown-item>
                               <el-dropdown-item icon="reading-lamp" @click="LoginOut">登 出</el-dropdown-item>
                             </el-dropdown-menu>
@@ -105,7 +96,6 @@ import BottomInfo from '@/views/layout/bottomInfo/bottomInfo.vue'
 import { mapGetters, mapActions } from 'vuex'
 import CustomPic from '@/components/customPic/index.vue'
 import Setting from './setting/index.vue'
-import { setUserAuthority } from '@/api/user'
 import { emitter } from '@/utils/bus.js'
 export default {
   name: 'Layout',
@@ -205,17 +195,6 @@ export default {
   },
   methods: {
     ...mapActions('user', ['LoginOut', 'GetUserInfo']),
-    async changeUserAuth(id) {
-      const res = await setUserAuthority({
-        authorityId: id
-      })
-      if (res.code === 0) {
-        emitter.emit('closeAllPage')
-        setTimeout(() => {
-          window.location.reload()
-        }, 1)
-      }
-    },
     reload() {
       this.reloadFlag = false
       this.$nextTick(() => {

@@ -1,15 +1,25 @@
-import { login, getUserInfo } from '@/api/user'
+import { login, getUserInfo, setUserInfo } from '@/api/user'
 import router from '@/router/index'
 import { store } from '@/store/index'
+import { ElMessage } from 'element-plus'
 
 export const user = {
   namespaced: true,
   state: {
     userInfo: {
-      uuid: '',
+      id: '',
+      uid: '',
+      userName: '',
       nickName: '',
-      headerImg: '',
-      authority: {},
+      birth: '',
+      avatar: '',
+      roleID: '',
+      roleName: '',
+      phone: '',
+      wechat: '',
+      email: '',
+      state: '',
+      defaultRouter: '',
       sideMode: 'dark',
       activeColor: '#4D70FF',
       baseColor: '#fff'
@@ -28,7 +38,10 @@ export const user = {
     setToken(state, tokenInfo) {
       // 这里的 `state` 对象是模块的局部状态
       state.tokenInfo = tokenInfo
-    }
+    },
+    ChangeSideMode: (state, val) => {
+      state.userInfo.sideMode = val
+    },
   },
   actions: {
     async GetUserInfo({ commit }) {
@@ -50,7 +63,18 @@ export const user = {
         })
         return true
       }
-    }
+    },
+    async changeSideMode({ commit, state }, data) {
+      const res = await setUserInfo({ sideMode: data, ID: state.userInfo.ID })
+      if (res.code === 0) {
+        commit('ChangeSideMode', data)
+        ElMessage({
+          type: 'success',
+          message: '设置成功'
+        })
+      }
+    },
+
   },
   getters: {
     userInfo(state) {

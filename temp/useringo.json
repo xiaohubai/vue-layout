@@ -1,0 +1,63 @@
+{
+    "ID": 1,
+    "CreatedAt": "2022-07-21T21:11:36+08:00",
+    "UpdatedAt": "2022-07-21T21:11:36+08:00",
+    "uuid": "4fb3532c-8c95-4107-8155-89300149a977",
+    "userName": "admin",
+    "nickName": "超级管理员",
+    "sideMode": "dark",
+    "headerImg": "https:///qmplusimg.henrongyi.top/gva_header.jpg",
+    "baseColor": "#fff",
+    "activeColor": "#1890ff",
+    "authorityId": "888",
+    "authority": {
+        "CreatedAt": "2022-07-21T21:11:36+08:00",
+        "UpdatedAt": "2022-07-21T21:11:36+08:00",
+        "DeletedAt": null,
+        "authorityId": "888",
+        "authorityName": "普通用户",
+        "parentId": "0",
+        "dataAuthorityId": null,
+        "children": null,
+        "menus": null,
+        "defaultRouter": "dashboard"
+    },
+    "authorities": [
+        {
+            "CreatedAt": "2022-07-21T21:11:36+08:00",
+            "UpdatedAt": "2022-07-21T21:11:36+08:00",
+            "DeletedAt": null,
+            "authorityId": "888",
+            "authorityName": "普通用户",
+            "parentId": "0",
+            "dataAuthorityId": null,
+            "children": null,
+            "menus": null,
+            "defaultRouter": "dashboard"
+        },
+        {
+            "CreatedAt": "2022-07-21T21:11:36+08:00",
+            "UpdatedAt": "2022-07-21T21:11:36+08:00",
+            "DeletedAt": null,
+            "authorityId": "8881",
+            "authorityName": "普通用户子角色",
+            "parentId": "888",
+            "dataAuthorityId": null,
+            "children": null,
+            "menus": null,
+            "defaultRouter": "dashboard"
+        },
+        {
+            "CreatedAt": "2022-07-21T21:11:36+08:00",
+            "UpdatedAt": "2022-07-21T21:11:36+08:00",
+            "DeletedAt": null,
+            "authorityId": "9528",
+            "authorityName": "测试角色",
+            "parentId": "0",
+            "dataAuthorityId": null,
+            "children": null,
+            "menus": null,
+            "defaultRouter": "dashboard"
+        }
+    ]
+}

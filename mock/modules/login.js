@@ -7,67 +7,23 @@ export default [
                 "code": 0,
                 "data": {
                     "userInfo": {
-                        "ID": 1,
-                        "CreatedAt": "2022-07-21T21:11:36+08:00",
-                        "UpdatedAt": "2022-07-21T21:11:36+08:00",
-                        "uuid": "4fb3532c-8c95-4107-8155-89300149a977",
+                        "id": 1,
+                        "uid": "67cdf195-574d-456a-a761-c18b5b8585c1",
                         "userName": "admin",
-                        "nickName": "超级管理员",
-                        "sideMode": "dark",
-                        "headerImg": "https:///qmplusimg.henrongyi.top/gva_header.jpg",
-                        "baseColor": "#fff",
-                        "activeColor": "#1890ff",
-                        "authorityId": "888",
-                        "authority": {
-                            "CreatedAt": "2022-07-21T21:11:36+08:00",
-                            "UpdatedAt": "2022-07-21T21:11:36+08:00",
-                            "DeletedAt": null,
-                            "authorityId": "888",
-                            "authorityName": "普通用户",
-                            "parentId": "0",
-                            "dataAuthorityId": null,
-                            "children": null,
-                            "menus": null,
-                            "defaultRouter": "dashboard"
-                        },
-                        "authorities": [
-                            {
-                                "CreatedAt": "2022-07-21T21:11:36+08:00",
-                                "UpdatedAt": "2022-07-21T21:11:36+08:00",
-                                "DeletedAt": null,
-                                "authorityId": "888",
-                                "authorityName": "普通用户",
-                                "parentId": "0",
-                                "dataAuthorityId": null,
-                                "children": null,
-                                "menus": null,
-                                "defaultRouter": "dashboard"
-                            },
-                            {
-                                "CreatedAt": "2022-07-21T21:11:36+08:00",
-                                "UpdatedAt": "2022-07-21T21:11:36+08:00",
-                                "DeletedAt": null,
-                                "authorityId": "8881",
-                                "authorityName": "普通用户子角色",
-                                "parentId": "888",
-                                "dataAuthorityId": null,
-                                "children": null,
-                                "menus": null,
-                                "defaultRouter": "dashboard"
-                            },
-                            {
-                                "CreatedAt": "2022-07-21T21:11:36+08:00",
-                                "UpdatedAt": "2022-07-21T21:11:36+08:00",
-                                "DeletedAt": null,
-                                "authorityId": "9528",
-                                "authorityName": "测试角色",
-                                "parentId": "0",
-                                "dataAuthorityId": null,
-                                "children": null,
-                                "menus": null,
-                                "defaultRouter": "dashboard"
-                            }
-                        ]
+                        "nickName": "hahaha",
+                        "birth": "2022-07-20",
+                        "avatar": "avatar.jpg",
+                        "roleID": "0",
+                        "roleName": "管理员",
+                        "phone": "13269110806",
+                        "wechat": "",
+                        "email": "",
+                        "state": "",
+                        "defaultRouter": "dashboard",
+                        "createdUser": "admin",
+                        "updatedUser": "admin",
+                        "createAt": "2022-07-20 20:44:58",
+                        "updateAt": "2022-07-20 20:44:58"
                     },
                     "tokenInfo": {
                         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2NkZjE5NS01NzRkLTQ1NmEtYTc2MS1jMThiNWI4NTg1YzEiLCJ1c2VybmFtZSI6ImFkbWluIiwicGhvbmUiOiIxMzI2OTExMDgwNiIsInJvbGVfaWQiOiIwIiwicm9sZV9uYW1lIjoi566h55CG5ZGYIiwiYnJpdGgiOiIiLCJzdGF0ZSI6IjAiLCJidWZmZXJfdGltZSI6ODY0MDAsImV4cCI6MTY1ODkyNTg5OCwiaXNzIjoieGlhb2h1YmFpQG91dGxvb2suY29tIiwibmJmIjoxNjU4MzIwMDk4fQ.OmegMpA-Ron2mXSm_bLI9Herpyh3uhs6lr1c_r0BBQo",
@@ -96,36 +52,5 @@ export default [
             };
         }
     },
-    {
-        url: "/user/getUserInfo",
-        method: "get",
-        response: () => {
-            return {
-                "code": 0,
-                "data": {
-                    "userInfo": {
-                        "id": 1,
-                        "uid": "67cdf195-574d-456a-a761-c18b5b8585c1",
-                        "userName": "admin",
-                        "nick": "",
-                        "birth": "2022-07-20",
-                        "avatar": "avatar.jpg",
-                        "roleID": "0",
-                        "roleName": "管理员",
-                        "phone": "13269110806",
-                        "wechat": "",
-                        "email": "",
-                        "state": "",
-                        "defaultRouter": "dashboard",
-                        "createdUser": "admin",
-                        "updatedUser": "admin",
-                        "createAt": "2022-07-20 20:44:58",
-                        "updateAt": "2022-07-20 20:44:58"
-                    }
-                },
-                "msg": "成功",
-                "trace_id": "48c3b35188f3dae5"
-            };
-        }
-    }
+
 ];

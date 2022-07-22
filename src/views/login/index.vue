@@ -93,7 +93,7 @@ export default {
         if (v) {
           const flag = await this.$store.dispatch('user/Login', this.loginForm)
           if (flag) {
-            this.$router.push({ name: this.$store.getters['user/userInfo'].authority.defaultRouter })
+            this.$router.push({ name: this.$store.getters['user/userInfo'].defaultRouter })
             return true
           }
         }
